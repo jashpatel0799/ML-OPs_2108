@@ -45,8 +45,8 @@ X_train, X_dev_test, y_train, y_dev_test = train_test_split(
 
 
 fraction_want = dev_frac/(dev_frac+test_frac)
-X_test, X_dev, y_test, y_train = train_test_split(
-    x_dev_test, y_dev_test, test_size=fraction_want, shuffle=True
+X_test, X_dev, y_test, y_dev = train_test_split(
+    X_dev_test, y_dev_test, test_size=fraction_want, shuffle=True
 )
 # if testing on the same as traning set: the performance matrics may overestimate 
 # the goodness of the model. 
@@ -59,7 +59,7 @@ clf = svm.SVC()
 
 # PART: setting up hyper parameter
 hyper_param = {'gamma': GAMMA}
-clf.set_param(**hyper_param)
+clf.set_params(**hyper_param)
 
 # PART: train model
 # Learn the digits on the train subset
