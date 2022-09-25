@@ -23,8 +23,8 @@ assert len(hyp_para_combo) == len(gamma_list)*len(c_list)
 
 
 
-train_frac = 0.8
-test_frac = 0.1
+train_frac = 0.7
+test_frac = 0.2
 dev_frac = 0.1
 
 
