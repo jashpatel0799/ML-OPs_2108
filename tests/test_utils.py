@@ -1,7 +1,11 @@
 import sys
 import os
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
 sys.path.append('.')
-from utils import get_all_h_params_comb, train_save_model
+from utils import get_all_h_params_comb, train_save_model, data_viz, preprocess_digits
+from plot_digit_classification import h_param
+from joblib import dump,load
 
 def test_get_h_param_comb():
     gamma_list  = [0.01, 0.005, 0.001, 0.0005, 0.0001]
@@ -33,16 +37,17 @@ def test_get_h_param_comb():
 
 
 def test_check_model_saving():
-    model_path = '/path/'
+    model_path = 'svm_gamma_0.0001_C_5.joblib'
     digits = datasets.load_digits()
     data_viz(digits)
     data, label = preprocess_digits(digits)
     smaple_data = data[:500]
     smaple_label = label[:500]
-    actual_modle_path, clf = train_save_test(smaple_data, smaple_label, smaple_data, smaple_label, model_path, h_param_comb)
+    h_param_comb = h_param()
+    actual_modle_path, clf = train_save_model(smaple_data, smaple_label, smaple_data, smaple_label, model_path, h_param_comb)
 
     assert actual_modle_path == model_path
-    assert os.path.exist.(model.path)
+    assert os.path.exists(model_path)
 
     loaded_model = load(model_path)
 

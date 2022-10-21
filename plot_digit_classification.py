@@ -25,6 +25,9 @@ h_param_comb = get_all_h_params_comb(params)
 
 assert len(h_param_comb) == len(gamma_list)*len(c_list)
 
+def h_param():
+    return h_param_comb
+
 
 
 train_frac = 0.8
