@@ -2,6 +2,11 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 
+
+def get_all_h_params_comb(params):
+    hyp_para_comb = [{"gamma":g, "C":c} for g in params['gamma'] for c in params['C']]
+    return hyp_para_comb
+
 def preprocess_digits(dataset):
     # PART: data pre-processing -- to normlize data, to remove noice,
     #                               formate the data tobe consumed by model

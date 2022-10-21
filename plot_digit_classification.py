@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn import datasets, svm, metrics
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from utils import preprocess_digits, data_viz, train_dev_test_split, h_param_tuning
+from utils import preprocess_digits, data_viz, train_dev_test_split, h_param_tuning, get_all_h_params_comb
 
 
 # 1. set the range of hyperparameters
@@ -14,8 +14,14 @@ gamma_list  = [0.01, 0.005, 0.001, 0.0005, 0.0001]
 c_list = [0.1, 0.2, 0.5, 0.7, 1, 2, 5, 7, 10]
 
 
+params = {}
+params['gamma'] = gamma_list
+params['C'] = c_list
+
+
+
 # 2. for every combiation of hyper parameter values
-hyp_para_combo = [{"gamma":g, "C":c} for g in gamma_list for c in c_list]
+h_param_comb = get_all_h_params_comb(params)
 
 assert len(hyp_para_combo) == len(gamma_list)*len(c_list)
 
