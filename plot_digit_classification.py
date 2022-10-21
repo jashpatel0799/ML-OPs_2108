@@ -6,18 +6,27 @@ import matplotlib.pyplot as plt
 from sklearn import datasets, svm, metrics
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from utils import preprocess_digits, data_viz, train_dev_test_split, h_param_tuning
-
+from utils import preprocess_digits, data_viz, train_dev_test_split, h_param_tuning, get_all_h_params_comb, train_save_model
+from joblib import dump,load
 
 # 1. set the range of hyperparameters
 gamma_list  = [0.01, 0.005, 0.001, 0.0005, 0.0001]
 c_list = [0.1, 0.2, 0.5, 0.7, 1, 2, 5, 7, 10]
 
 
-# 2. for every combiation of hyper parameter values
-hyp_para_combo = [{"gamma":g, "C":c} for g in gamma_list for c in c_list]
+params = {}
+params['gamma'] = gamma_list
+params['C'] = c_list
 
-assert len(hyp_para_combo) == len(gamma_list)*len(c_list)
+
+
+# 2. for every combiation of hyper parameter values
+h_param_comb = get_all_h_params_comb(params)
+
+assert len(h_param_comb) == len(gamma_list)*len(c_list)
+
+def h_param():
+    return h_param_comb
 
 
 
@@ -49,17 +58,16 @@ del digits
 # We want to test on "unseen" sample. 
 
 X_train, y_train, X_dev, y_dev, X_test, y_test = train_dev_test_split(
-    data, label, train_frac, dev_frac, test_frac
+    data, label, train_frac, dev_frac, 1 - (train_frac + dev_frac)
 )
-  
 
-# PART: Define the model
-# Create a classifier: a support vector classifier
-clf = svm.SVC()
-metric = metrics.accuracy_score
-best_model, best_metric, best_hyp_param = h_param_tuning(hyp_para_combo, clf, X_train, y_train, X_dev, y_dev,metric)
-# if predicted < curr_predicted:
-#     predicted = curr_predicted
+model_path, clf = train_save_model(X_train, y_train, X_dev, y_dev, None, h_param_comb)
+
+
+
+best_model = load(model_path)
+
+
 predicted = best_model.predict(X_test) 
 
 # PART: sanity check visulization of data
@@ -76,4 +84,4 @@ print(
     f"{metrics.classification_report(y_test, predicted)}\n"
 ) 
 
-print(f"Best hyperparameters were: {best_hyp_param}")
+print(f"Best hyperparameters were: {best_model}")

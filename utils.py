@@ -1,6 +1,13 @@
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn import svm, metrics
+from joblib import dump,load
+
+
+def get_all_h_params_comb(params):
+    hyp_para_comb = [{"gamma":g, "C":c} for g in params['gamma'] for c in params['C']]
+    return hyp_para_comb
 
 def preprocess_digits(dataset):
     # PART: data pre-processing -- to normlize data, to remove noice,
@@ -66,3 +73,26 @@ def h_param_tuning(hyp_para_combo, clf, X_train, y_train, X_dev, y_dev, metric):
             print(f"{best_hyp_param} \tAccuracy: {accuracy}")
 
     return best_model, accuracy, best_hyp_param
+
+
+def train_save_model(X_train, y_train, X_dev, y_dev, model_path, h_param_comb):
+    
+
+    # PART: Define the model
+    # Create a classifier: a support vector classifier
+    clf = svm.SVC()
+    metric = metrics.accuracy_score
+    best_model, best_metric, best_hyp_param = h_param_tuning(h_param_comb, clf, X_train, y_train, X_dev, y_dev, metric)
+    # if predicted < curr_predicted:
+    #     predicted = curr_predicted
+
+
+    best_param_config = "_".join([h+"_"+str(best_hyp_param[h]) for h in best_hyp_param])
+
+    if model_path is None:
+        model_path = "svm_" + best_param_config + ".joblib"
+
+    dump(best_model, "svm_" + best_param_config + ".joblib")
+
+
+    return model_path, clf
