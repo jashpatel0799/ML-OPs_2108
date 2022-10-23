@@ -111,7 +111,8 @@ tree_acc.append(accuracy_score(y_test, tree_pre))
 # print(len(np.unique(tree_pre)), c)
 
 def tree_prec_class():
-    return tree_pre
+    l = len(set(tree_pre))
+    return l
 
 # PART: Compute evaluation Matrics 
 # 4. report the best set accuracy with that best model.

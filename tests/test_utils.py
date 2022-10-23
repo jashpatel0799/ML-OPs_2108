@@ -60,13 +60,13 @@ def test_check_model_saving():
 # not based on single classifier
 def test_not_on_single_class():
     # print(f'tree: {tree_prec_class}')
-    length = len(np.unique(tree_prec_class))
+    length = tree_prec_class()
     print(length)
     assert length != 1
 
 # check all class
 def test_all_class():
-    length = len(np.unique(tree_prec_class))
+    length = tree_prec_class()
     print(length)
     assert length == 10
 
