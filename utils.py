@@ -30,13 +30,13 @@ def data_viz(dataset):
 def train_dev_test_split(data, label, train_frac, dev_frac, test_frac):
     dev_test_frac = 1- train_frac
     X_train, X_dev_test, y_train, y_dev_test = train_test_split(
-        data, label, test_size=dev_test_frac, shuffle=True
+        data, label, test_size=dev_test_frac, shuffle=True, random_state = 5
     )
 
 
     fraction_want = dev_frac/(dev_frac+test_frac)
     X_test, X_dev, y_test, y_dev = train_test_split(
-        X_dev_test, y_dev_test, test_size=fraction_want, shuffle=True
+        X_dev_test, y_dev_test, test_size=fraction_want, shuffle=True, random_state = 5
     )
 
     return X_train, y_train, X_dev, y_dev, X_dev, y_dev
@@ -70,7 +70,7 @@ def h_param_tuning(hyp_para_combo, clf, X_train, y_train, X_dev, y_dev, metric):
             best_hyp_param = hyper_param
             accuracy = curr_accuracy
             best_model = clf
-            print(f"{best_hyp_param} \tAccuracy: {accuracy}")
+            # print(f"{best_hyp_param} \tAccuracy: {accuracy}")
 
     return best_model, accuracy, best_hyp_param
 
@@ -96,3 +96,11 @@ def train_save_model(X_train, y_train, X_dev, y_dev, model_path, h_param_comb):
 
 
     return model_path, clf
+
+
+
+
+# perf_test = {}
+# for k in range(S):
+#     train, dev, test = create_split()
+#     best_model = train_and_h_tune()
