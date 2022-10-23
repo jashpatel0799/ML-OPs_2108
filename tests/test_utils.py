@@ -62,13 +62,13 @@ def test_not_on_single_class():
     # print(f'tree: {tree_prec_class}')
     length = len(np.unique(tree_prec_class))
     print(length)
-    assert lenth != 1
+    assert length != 1
 
-
+# check all class
 def test_all_class():
     length = len(np.unique(tree_prec_class))
     print(length)
-    assert lenth == 10
+    assert length == 10
 
 # what more test cases should be there 
 # irrespective of the changes to the refactored code.
