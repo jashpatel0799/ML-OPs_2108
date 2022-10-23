@@ -1,11 +1,12 @@
 import sys
 import os
-from sklearn import datasets
+from sklearn import datasets, tree
 from sklearn.model_selection import train_test_split
 sys.path.append('.')
 from utils import get_all_h_params_comb, train_save_model, data_viz, preprocess_digits
-from plot_digit_classification import h_param
+from plot_digit_classification import h_param, tree_prec_class
 from joblib import dump,load
+import numpy as np
 
 def test_get_h_param_comb():
     gamma_list  = [0.01, 0.005, 0.001, 0.0005, 0.0001]
@@ -27,6 +28,7 @@ def test_get_h_param_comb():
 
 # - some test cases that will validate if models are indeed getting saved or not.
 # step1: train on small datset, provide path to save trained model
+lenth = 10
 # step2: assert if a filr exist at the proived path
 # step3: assert a file indeed a scikit learn model
 # step4: optimally checksome validate the md5
@@ -54,6 +56,19 @@ def test_check_model_saving():
     assert type(loaded_model) == type(clf)
 
 
+
+# not based on single classifier
+def test_not_on_single_class():
+    # print(f'tree: {tree_prec_class}')
+    length = len(np.unique(tree_prec_class))
+    print(length)
+    assert lenth != 1
+
+
+def test_all_class():
+    length = len(np.unique(tree_prec_class))
+    print(length)
+    assert lenth == 10
 
 # what more test cases should be there 
 # irrespective of the changes to the refactored code.
