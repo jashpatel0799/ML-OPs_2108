@@ -123,16 +123,16 @@ tree_variance = np.var(tree_acc)
 
 print(f"SVM Mean: {svm_mean} \t Variance: {svm_variance}")
 print(f'TREE Mean: {tree_mean} \t Variance: {tree_variance}')
-
+print()
 if svm_mean > tree_mean:
     print("svm is best")
-    print(
-        f"Classification report for classifier {clf}:\n"
-        f"{metrics.classification_report(y_test, predicted)}\n"
-    ) 
+    # print(
+    #     f"Classification report for classifier {clf}:\n"
+    #     f"{metrics.classification_report(y_test, predicted)}\n"
+    # ) 
 
-    print(f"Best hyperparameters were: {best_model}")
+    # print(f"Best hyperparameters were: {best_model}")
 
 else:
     print("tree is best")
-
+print()
