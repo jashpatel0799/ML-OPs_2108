@@ -2,3 +2,4 @@ matplotlib
 sklearn
 pytest
 flask
+joblib
