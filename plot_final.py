@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import random
 import numpy as np
 import argparse
+import os
 # import datasets, classifiers and performance metrics
 from sklearn import datasets, metrics, tree
 from sklearn.model_selection import train_test_split
@@ -91,7 +92,6 @@ X_train, y_train, X_dev, y_dev, X_test, y_test = train_dev_test_split(
 
 
 if args.clf_model == "svm":
-
     model_path, clf = train_save_model(X_train, y_train, X_dev, y_dev, None, h_param_comb)
     best_model = load("models/"+model_path)
     predicted= best_model.predict(X_test)
@@ -105,6 +105,8 @@ if args.clf_model == "svm":
     print(f"svm acc:{accuracy_score(y_test, predicted)}")
     print(f"svm f1_macro:{f1_score(y_test, predicted,  labels=None, pos_label=1, average='macro', sample_weight=None, zero_division='warn')}")
 
+    if not os.path.exists("results"):
+        os.makedirs("results")
     file_1 = open("results/result.txt", "w+")
 
     file_1.write(f"svm acc: {str(accuracy_score(y_test, predicted))}\n")
@@ -122,6 +124,8 @@ elif args.clf_model == "tree":
     print(f"tree acc: {accuracy_score(y_test, tree_pre)}")
     print(f"tree f1_macro: {f1_score(y_test, tree_pre,   labels=None, pos_label=1, average='macro', sample_weight=None, zero_division='warn')}")
 
+    if not os.path.exists("results"):
+        os.makedirs("results")
     file_1 = open("results/result.txt", "w+")
 
     file_1.write(f"tree acc:{str(accuracy_score(y_test, tree_pre))}\n")

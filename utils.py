@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
-
+import os
 from sklearn.model_selection import train_test_split
 from sklearn import svm, metrics
 from joblib import dump,load
 
-PATH_N = 'models'
+PATH_N = "models"
+
 def get_all_h_params_comb(params):
     hyp_para_comb = [{"gamma":g, "C":c} for g in params['gamma'] for c in params['C']]
     return hyp_para_comb
@@ -92,6 +93,10 @@ def train_save_model(X_train, y_train, X_dev, y_dev, model_path, h_param_comb):
 
     if model_path is None:
         model_path = "svm_" + best_param_config + ".joblib"
+
+    
+    if not os.path.exists(PATH_N):
+        os.makedirs(PATH_N)
 
     dump(best_model, PATH_N + "/svm_" + best_param_config + ".joblib")
 
