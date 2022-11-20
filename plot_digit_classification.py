@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import random
 import numpy as np
+import argparse
 # import datasets, classifiers and performance metrics
 from sklearn import datasets, metrics, tree
 from sklearn.model_selection import train_test_split
@@ -44,7 +45,8 @@ data, label = preprocess_digits(digits)
 # housekeeping
 del digits
 
-
+def data_info():
+    return data, label, train_frac, test_frac, dev_frac
 
 # PART: define train/dev/test splite of experiment protocol
 # trin to train model
@@ -136,7 +138,8 @@ if svm_mean > tree_mean:
 else:
     print("tree is best")
 
-    
+
+
 print()
 
 # flask --app serve.py --debug run

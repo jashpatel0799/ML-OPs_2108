@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm, metrics
 from joblib import dump,load
 
-
+PATH_N = 'models'
 def get_all_h_params_comb(params):
     hyp_para_comb = [{"gamma":g, "C":c} for g in params['gamma'] for c in params['C']]
     return hyp_para_comb
@@ -27,19 +27,20 @@ def data_viz(dataset):
         ax.set_title("Training: %i" % label)
 
 
-def train_dev_test_split(data, label, train_frac, dev_frac, test_frac):
+# random state for final exam question 1(a)
+def train_dev_test_split(data, label, train_frac, dev_frac, test_frac, rs=50):
     dev_test_frac = 1- train_frac
     X_train, X_dev_test, y_train, y_dev_test = train_test_split(
-        data, label, test_size=dev_test_frac, shuffle=True, random_state = 5
+        data, label, test_size=dev_test_frac, shuffle=True, random_state = rs
     )
 
 
     fraction_want = dev_frac/(dev_frac+test_frac)
     X_test, X_dev, y_test, y_dev = train_test_split(
-        X_dev_test, y_dev_test, test_size=fraction_want, shuffle=True, random_state = 5
+        X_dev_test, y_dev_test, test_size=fraction_want, shuffle=True, random_state = rs
     )
 
-    return X_train, y_train, X_dev, y_dev, X_dev, y_dev
+    return X_train, y_train, X_test, y_test, X_dev, y_dev
 
 
 def h_param_tuning(hyp_para_combo, clf, X_train, y_train, X_dev, y_dev, metric):
@@ -92,7 +93,7 @@ def train_save_model(X_train, y_train, X_dev, y_dev, model_path, h_param_comb):
     if model_path is None:
         model_path = "svm_" + best_param_config + ".joblib"
 
-    dump(best_model, "svm_" + best_param_config + ".joblib")
+    dump(best_model, PATH_N + "/svm_" + best_param_config + ".joblib")
 
 
     return model_path, clf
